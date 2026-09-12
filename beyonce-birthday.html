@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Beyoncé 🎀</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Quicksand:wght@400;500;600;700&display=swap');
+
+  :root{
+    --pink-deep: #e85d8a;
+    --pink-mid: #f7a8c4;
+    --pink-soft: #fce4ee;
+    --pink-pale: #fff5f9;
+    --white: #ffffff;
+    --text: #7a3350;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html,body{
+    margin:0;
+    min-height:100vh;
+    background: linear-gradient(180deg, var(--pink-pale) 0%, var(--pink-soft) 100%);
+    font-family: 'Quicksand', sans-serif;
+    color: var(--text);
+    overflow-x:hidden;
+  }
+
+  .stage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 24px;
+    position:relative;
+  }
+
+  /* floating hearts background */
+  .hearts{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+  }
+  .hearts span{
+    position:absolute;
+    bottom:-10%;
+    font-size: 20px;
+    opacity:0.5;
+    animation: float 11s linear infinite;
+    color: var(--pink-mid);
+  }
+  @keyframes float{
+    0%{ transform: translateY(0) rotate(0deg); opacity:0; }
+    10%{ opacity:0.6; }
+    90%{ opacity:0.6; }
+    100%{ transform: translateY(-110vh) rotate(25deg); opacity:0; }
+  }
+
+  /* ---- envelope screen ---- */
+  #envelope-screen{
+    position:relative;
+    z-index:1;
+    text-align:center;
+  }
+
+  .envelope-wrap{
+    cursor:pointer;
+    display:inline-block;
+    user-select:none;
+  }
+
+  .envelope{
+    width: 220px;
+    height: 150px;
+    position: relative;
+    margin: 0 auto 28px;
+    filter: drop-shadow(0 18px 30px rgba(232,93,138,0.35));
+    transition: transform 0.35s ease;
+  }
+  .envelope-wrap:hover .envelope{
+    transform: translateY(-6px) scale(1.03);
+  }
+
+  .env-body{
+    position:absolute;
+    inset:0;
+    background: var(--white);
+    border-radius: 10px;
+    border: 2px solid var(--pink-mid);
+  }
+  .env-flap{
+    position:absolute;
+    top:0; left:0; right:0;
+    height: 0;
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-top: 90px solid var(--pink-mid);
+    border-radius: 10px 10px 0 0;
+    transform-origin: top;
+    transition: transform 0.5s ease;
+    z-index: 2;
+  }
+  .env-heart{
+    position:absolute;
+    top: 58px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 22px;
+    z-index: 3;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ transform: translateX(-50%) scale(1); }
+    50%{ transform: translateX(-50%) scale(1.15); }
+  }
+
+  .prompt-text{
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--pink-deep);
+    margin: 0 0 6px;
+  }
+  .prompt-sub{
+    font-size: 14px;
+    color: var(--text);
+    opacity: 0.7;
+    margin:0;
+  }
+
+  /* ---- letter screen ---- */
+  #letter-screen{
+    display:none;
+    position:relative;
+    z-index:1;
+    max-width: 560px;
+    width: 100%;
+  }
+
+  .card{
+    background: var(--white);
+    border-radius: 28px;
+    padding: 48px 40px 40px;
+    box-shadow: 0 30px 60px rgba(232,93,138,0.25);
+    position: relative;
+    opacity:0;
+    transform: translateY(18px) scale(0.98);
+    animation: riseIn 0.7s cubic-bezier(.2,.8,.2,1) forwards;
+    border: 1px solid var(--pink-soft);
+  }
+  @keyframes riseIn{
+    to{ opacity:1; transform: translateY(0) scale(1); }
+  }
+
+  .card::before{
+    content:"";
+    position:absolute;
+    top:-14px; left:50%;
+    transform: translateX(-50%);
+    width: 60px; height: 28px;
+    background: var(--pink-mid);
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(232,93,138,0.35);
+  }
+
+  .headline{
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 6vw, 40px);
+    color: var(--pink-deep);
+    text-align:center;
+    margin: 6px 0 4px;
+    line-height: 1.15;
+  }
+  .name{
+    font-style: italic;
+    color: var(--pink-mid);
+  }
+
+  .subline{
+    text-align:center;
+    font-size: 15px;
+    margin: 0 0 28px;
+    opacity: 0.75;
+  }
+
+  .letter-body{
+    font-size: 16.5px;
+    line-height: 1.75;
+    color: var(--text);
+  }
+  .letter-body p{ margin: 0 0 16px; }
+  .signoff{
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--pink-deep);
+    margin-top: 24px;
+  }
+
+  .confetti-row{
+    text-align:center;
+    font-size: 26px;
+    margin-top: 6px;
+    letter-spacing: 6px;
+  }
+
+  .oops{
+    display:inline-block;
+    background: var(--pink-soft);
+    color: var(--pink-deep);
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  .oops-row{ text-align:center; }
+
+  /* confetti burst */
+  .confetti-piece{
+    position:fixed;
+    top: -10px;
+    width: 9px; height: 14px;
+    border-radius: 2px;
+    z-index: 5;
+    animation: fall linear forwards;
+  }
+  @keyframes fall{
+    to{ transform: translateY(105vh) rotate(540deg); opacity: 0.9; }
+  }
+
+  @media (max-width: 480px){
+    .card{ padding: 40px 24px 32px; border-radius: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<div class="stage">
+
+  <!-- Screen 1: envelope -->
+  <div id="envelope-screen">
+    <div class="envelope-wrap" onclick="openLetter()">
+      <div class="envelope">
+        <div class="env-body"></div>
+        <div class="env-flap" id="flap"></div>
+        <div class="env-heart">💌</div>
+      </div>
+      <p class="prompt-text">A little something for you</p>
+      <p class="prompt-sub">(tap the envelope, Beyoncé)</p>
+    </div>
+  </div>
+
+  <!-- Screen 2: letter -->
+  <div id="letter-screen">
+    <div class="card">
+      <div class="oops-row"><span class="oops">🙈 very late, very sorry</span></div>
+      <h1 class="headline">Happy Birthday,<br><span class="name">Beyoncé</span> 🎀</h1>
+      <p class="subline">okay yes this is late. let me explain myself below.</p>
+      <div class="letter-body">
+        <p>So... I completely dropped the ball and forgot to say happy birthday on the actual day. I know, I know — unforgivable behavior. Please revoke my "good friend" badge temporarily while I fix this.</p>
+        <p>But better late than never, right? So here's a whole little website just for you, because a text felt way too small for how much I actually wanted to celebrate you.</p>
+        <p>I hope your day was full of good food, good laughs, and zero notifications from people who forgot to text you on time 👀. You deserve to be celebrated properly — not just today, but always.</p>
+        <p>So consider this my very extra, very overdue happy birthday. I hope this year brings you everything you're hoping for and then some.</p>
+        <p class="signoff">Happy birthday, gorgeous. 💕</p>
+      </div>
+      <div class="confetti-row">🎂 🎈 🎉 🩷 ✨</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // floating hearts background
+  const heartsContainer = document.getElementById('hearts');
+  const symbols = ['💗','💕','🩷','💖'];
+  for(let i=0;i<18;i++){
+    const s = document.createElement('span');
+    s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+    s.style.left = Math.random()*100 + '%';
+    s.style.fontSize = (14 + Math.random()*18) + 'px';
+    s.style.animationDuration = (8 + Math.random()*8) + 's';
+    s.style.animationDelay = (Math.random()*10) + 's';
+    heartsContainer.appendChild(s);
+  }
+
+  function burstConfetti(){
+    const colors = ['#e85d8a','#f7a8c4','#fce4ee','#ffffff','#f48fb1'];
+    for(let i=0;i<40;i++){
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.left = Math.random()*100 + 'vw';
+      p.style.background = colors[Math.floor(Math.random()*colors.length)];
+      p.style.animationDuration = (2.2 + Math.random()*1.8) + 's';
+      p.style.opacity = 0.9;
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(), 4200);
+    }
+  }
+
+  function openLetter(){
+    document.getElementById('flap').style.transform = 'rotateX(180deg)';
+    setTimeout(()=>{
+      document.getElementById('envelope-screen').style.display = 'none';
+      document.getElementById('letter-screen').style.display = 'block';
+      burstConfetti();
+    }, 420);
+  }
+</script>
+
+</body>
+</html>
